@@ -1,16 +1,21 @@
 
-const http = require('http');
-const connectDB = require('./database/connection');
+const express = require('express');
+const connectDB = require('./config/database');
+const productRoutes = require('./routes/productRoutes');
+const path = require('path');
 
 const PORT = process.env.PORT || 3000;
+const app = express();
 
-const server = http.createServer((req, res) => {
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.end('Server is running!');
-});
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+app.use('/personnes', productRoutes);
 
 connectDB().then(() => {
-    server.listen(PORT, () => {
+    app.listen(PORT, () => {
         console.log(`Server is listening on port ${PORT}`);
     });
 }).catch((err) => {
