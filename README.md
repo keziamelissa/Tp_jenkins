@@ -2,3 +2,4 @@
 
 docker exec -it jenkins-blueocean cat /var/jenkins_home/secrets/initialAdminPassword
 
+Mot de passe node : IK1GufkHzBfU6VWk
