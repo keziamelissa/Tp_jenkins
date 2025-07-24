@@ -4,24 +4,22 @@ pipeline {
     stages {
         stage('Préparation') {
             steps {
-                echo "Clonage et installation des dépendances"
-                sh 'python3 -m venv venv'
-                sh './venv/bin/pip install --upgrade pip'
-                sh './venv/bin/pip install -r requirements.txt'
+                echo "Clonage et installation des dépendances Node.js"
+                sh 'npm install'
             }
         }
 
         stage('Tests') {
             steps {
-                echo "Exécution des tests"
-                sh './venv/bin/python -m unittest discover -s tests'
+                echo "Exécution des tests Node.js"
+                sh 'npm test'
             }
         }
 
         stage('Lancement de l\'app') {
             steps {
-                echo "Lancement de Flask (en tâche de fond pour test)"
-                sh 'nohup ./venv/bin/python app.py &'
+                echo "Lancement de l\'application Node.js (en tâche de fond pour test)"
+                sh 'nohup node index.js &'
             }
         }
     }
